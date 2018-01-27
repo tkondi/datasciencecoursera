@@ -1,0 +1,10 @@
+hpc <- read.table("household_power_consumption.txt", header=TRUE, sep=";", na.strings = "?") 
+onetwoFeb <- hpc[hpc$Date %in% c("1/2/2007","2/2/2007") ,]
+Sys.setlocale("LC_TIME", "American")
+png(file = "plot3.png", width = 480, height = 480, units = "px")
+onetwoFeb$Time <- strptime(paste(onetwoFeb$Date, onetwoFeb$Time), "%d/%m/%Y %H:%M:%S")
+with(onetwoFeb, plot(Time,Sub_metering_1, type = "l",xlab = "", ylab ="Energy sub metering" ))
+lines(onetwoFeb$Time,onetwoFeb$Sub_metering_2, col="red")
+lines(onetwoFeb$Time,onetwoFeb$Sub_metering_3, col="blue")
+legend("topright",legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("black","red","blue"),lty = 1 )
+dev.off()
